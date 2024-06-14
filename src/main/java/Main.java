@@ -1,5 +1,13 @@
+public static void main(String[] args) {
+    Funciones.ejecutarConsultarTodos();
+}
 
 
+
+
+
+
+/*
 import java.sql.*;
 
 
@@ -23,18 +31,7 @@ public class Main {
 
 
 
-    }
-
-
-
-
-
-
-
-
-
-
-        
-
+ }
 
 }
+*/
