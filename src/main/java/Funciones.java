@@ -1,5 +1,5 @@
 import java.sql.*;
-
+/*
 public class Funciones {
 
     public static void ejecutarConsultarTodos() {
@@ -53,7 +53,7 @@ public class Funciones {
             if (rowsAffected > 0) {
                 System.out.println("Registro eliminado exitosamente.");
             } else {
-                System.out.println("No se encontró el registro con código: " + codigo);
+                so("No se encontró el registro con código: " + codigo);
             }
 
             preparedStatement.close();
@@ -67,7 +67,7 @@ public class Funciones {
 
 
 
-
+*/
 
 
 

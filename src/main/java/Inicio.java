@@ -1,16 +1,22 @@
 import javax.swing.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import javax.swing.table.DefaultTableModel;
+
 
 public class Inicio extends JFrame {
+
+
+
     private JPanel mainPanel;
-    private JButton consultarTodosButton;
-    private JButton consultarPorCodigoButton;
-    private JButton agregarRegistroButton;
-    private JButton actualizarRegistroButton;
-    private JButton eliminarRegistroButton;
-    private JTextArea textArea1;
-    private JList<String> list1;
+
+    private JButton buttonConsultar;
+    private JTable tableResultados;
 
     public Inicio() {
         setContentPane(mainPanel);
@@ -20,48 +26,46 @@ public class Inicio extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
-        // Action Listeners
-        consultarTodosButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Funciones.ejecutarConsultarTodos();
-            }
-        });
 
-        consultarPorCodigoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String codigo = JOptionPane.showInputDialog("Ingrese el código:");
-                Funciones.ejecutarConsultarPorCodigo(codigo);
-            }
-        });
 
-        agregarRegistroButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para agregar registro
-            }
-        });
+            // Acción del botón Consultar
+            buttonConsultar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    mostrarResultados();
+                }
+            });
+        }
 
-        actualizarRegistroButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Lógica para actualizar registro
-            }
-        });
+    private void mostrarResultados() {
+        try (Connection connection = Conexion.getConnection()) {
+            String query = "SELECT * FROM articulo";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
 
-        eliminarRegistroButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String codigo = JOptionPane.showInputDialog("Ingrese el código:");
-                Funciones.ejecutarEliminarPorCodigo(codigo);
+            // Crear modelo de tabla
+            DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nombre"}, 0);
+            while (resultSet.next()) {
+                int id = resultSet.getInt("idarticulo");
+                String nombre = resultSet.getString("nombre");
+                model.addRow(new Object[]{id, nombre});
             }
-        });
+
+            // Asignar el modelo a la tabla
+            tableResultados.setModel(model);
+
+            resultSet.close();
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
         new Inicio();
     }
+
+
 }
 
 
