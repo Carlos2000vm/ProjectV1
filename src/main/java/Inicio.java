@@ -15,8 +15,10 @@ public class Inicio extends JFrame {
 
     private JPanel mainPanel;
 
+    private JTextField textFieldNombre;
     private JButton buttonConsultar;
     private JTable tableResultados;
+    private JTextField textFieldCodigo;
 
     public Inicio() {
         setContentPane(mainPanel);
@@ -44,11 +46,14 @@ public class Inicio extends JFrame {
             ResultSet resultSet = statement.executeQuery(query);
 
             // Crear modelo de tabla
-            DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nombre"}, 0);
+            DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nombre", "Codigo","stock", "descripcion"}, 0);
             while (resultSet.next()) {
                 int id = resultSet.getInt("idarticulo");
                 String nombre = resultSet.getString("nombre");
-                model.addRow(new Object[]{id, nombre});
+                String Codigo = resultSet.getString("codigo");
+                String stock = resultSet.getString("stock");
+                String descripcion = resultSet.getString("descripcion");
+                model.addRow(new Object[]{id, nombre, Codigo, stock, descripcion});
             }
 
             // Asignar el modelo a la tabla
