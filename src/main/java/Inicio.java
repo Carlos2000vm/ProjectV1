@@ -35,7 +35,14 @@ public class Inicio extends JFrame {
             buttonConsultar.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    consultaCodigoNombre();
+
+                    if (!textFieldCodigo.getText().trim().isEmpty()||!textFieldNombre.getText().trim().isEmpty()){
+                        consultaCodigoNombre();
+                    }else {
+                        mostrarResultados();
+                    }
+
+
 
 
                 }
@@ -97,12 +104,12 @@ public class Inicio extends JFrame {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query.toString());
 
-            // Crear modelo de tabla
-            DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nombre","Codigo","stock", "descripcion"}, 0);
+            // Crea modelo de tabla
+            DefaultTableModel model = new DefaultTableModel(new String[]{"ID", "Nombre","codigo","stock", "descripcion"}, 0);
             while (resultSet.next()) {
                 int id = resultSet.getInt("idarticulo");
                 String nombreResult = resultSet.getString("nombre");
-                String Codigo = resultSet.getString("codigo");
+                codigo = resultSet.getString("codigo");
                 String stock = resultSet.getString("stock");
                 String descripcion = resultSet.getString("descripcion");
 
